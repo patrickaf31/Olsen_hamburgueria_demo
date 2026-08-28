@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 const housePhoto = "/manus-storage/olsen-casa-enxaimel_bd052846.png";
+const coffeePhoto = "/manus-storage/olsen-cafezinho_999f2e66.png";
 const instagramUrl = "https://www.instagram.com/olsen_cafeteria/";
 const whatsappUrl = "https://wa.me/5547991294132?text=Ol%C3%A1%20Olsen!%20Gostaria%20de%20saber%20mais%20sobre%20a%20cafeteria.";
 
@@ -115,6 +116,13 @@ export default function Home() {
             <Reveal><span className="small-label small-label--rust"><span className="label-dot" /> Feito à mão, com afeto</span></Reveal>
             <Reveal delay={100}><p className="welcome-lede">Em Pomerode, algumas casas guardam histórias. A Olsen decidiu preparar café dentro de uma delas — e abrir as portas para a sua.</p></Reveal>
             <Reveal className="welcome-aside" delay={180}><span>O café fica melhor<br />quando a conversa demora.</span><Heart size={22} strokeWidth={1.4} /></Reveal>
+          </div>
+        </section>
+
+        <section className="coffee-moment paper-section">
+          <div className="page-width coffee-moment__grid">
+            <Reveal className="coffee-moment__image"><img src={coffeePhoto} alt="Cafezinho servido em xícara de vidro na Olsen Cafeteria" /><span className="photo-note">Pausa para um café</span></Reveal>
+            <Reveal className="coffee-moment__copy" delay={150}><span className="small-label small-label--rust"><span className="label-dot" /> Um cafezinho da Olsen</span><h2>Pequenos rituais<br /><em>fazem o dia melhor.</em></h2><p>Tem o primeiro gole, a espuma delicada e aquele minuto em que a conversa desacelera. Na Olsen, o café chega como deve: feito com cuidado e servido para aproveitar.</p><a className="text-cta text-cta--dark" href="#visite">Venha tomar um café <ArrowUpRight size={16} /></a></Reveal>
           </div>
         </section>
 

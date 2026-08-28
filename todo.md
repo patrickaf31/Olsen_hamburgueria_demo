@@ -8,3 +8,4 @@
 - [x] Adicionar efeitos suaves de rolagem e entradas de seção com respeito a reduced motion.
 - [x] Ajustar botões para combinar formas arredondadas pontuais com a linguagem rústica.
 - [x] Validar desktop, mobile e build; links revisados no código e prontos para teste final.
+- [x] Hospedar a foto real `IMG_6924.PNG` e integrá-la em uma seção editorial de café, mantendo espaço para a próxima foto.

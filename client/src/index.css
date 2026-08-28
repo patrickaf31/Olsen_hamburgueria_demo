@@ -136,6 +136,19 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .welcome-aside { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-top: 4px; color: var(--terracotta-deep); font-size: 13px; font-weight: 600; line-height: 1.4; }
 .welcome-aside svg { flex: 0 0 auto; color: var(--mustard); }
 
+.coffee-moment { padding: 112px 0 124px; background: var(--linen); }
+.coffee-moment__grid { display: grid; grid-template-columns: minmax(300px, 0.82fr) minmax(0, 1.18fr); align-items: center; gap: clamp(65px, 10vw, 145px); }
+.coffee-moment__image { position: relative; width: min(100%, 430px); }
+.coffee-moment__image::before { content: ""; position: absolute; z-index: 0; top: 22px; right: -20px; bottom: -22px; left: 20px; border: 1px solid rgba(174,101,71,0.6); }
+.coffee-moment__image img { position: relative; z-index: 1; display: block; width: 100%; aspect-ratio: 0.77; object-fit: cover; object-position: center; }
+.photo-note { position: absolute; z-index: 2; right: -18px; bottom: 22px; padding: 11px 14px; background: var(--mustard); color: var(--coffee); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.coffee-moment__copy { max-width: 560px; }
+.coffee-moment__copy h2 { margin: 23px 0 24px; color: var(--moss-deep); font-family: "Space Grotesk", sans-serif; font-size: clamp(42px, 5.1vw, 72px); font-weight: 500; letter-spacing: -0.045em; line-height: 0.95; }
+.coffee-moment__copy h2 em { color: var(--terracotta-deep); font-style: normal; }
+.coffee-moment__copy p { max-width: 430px; color: var(--coffee-soft); font-size: 17px; line-height: 1.55; }
+.text-cta--dark { margin-top: 31px; color: var(--terracotta-deep); }
+.text-cta--dark:hover { color: var(--moss-deep); }
+
 .story-section { position: relative; overflow: hidden; padding: 122px 0 132px; }
 .beam-pattern { position: absolute; pointer-events: none; opacity: 0.5; background: linear-gradient(135deg, transparent 0 47%, var(--terracotta) 48% 51%, transparent 52% 100%), linear-gradient(45deg, transparent 0 47%, var(--terracotta) 48% 51%, transparent 52% 100%); background-size: 150px 150px; }
 .beam-pattern--top { top: -47px; right: -33px; width: 270px; height: 270px; transform: rotate(8deg); }
@@ -216,8 +229,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .hero-copy-block h1 { font-size: clamp(55px, 13vw, 84px); }
   .hero-note { right: 24px; bottom: 23px; }
   .scroll-cue { display: none; }
-  .welcome-grid, .story-layout, .visit-layout { grid-template-columns: 1fr; }
+  .welcome-grid, .coffee-moment__grid, .story-layout, .visit-layout { grid-template-columns: 1fr; }
   .welcome-grid { gap: 29px; }
+  .coffee-moment__grid { gap: 65px; }
+  .coffee-moment__image { width: min(100%, 470px); }
+  .coffee-moment__copy { max-width: 560px; }
   .welcome-aside { max-width: 245px; }
   .story-layout { gap: 65px; }
   .house-grid { grid-template-columns: 1fr; }
@@ -245,7 +261,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .hero-note { left: 20px; right: auto; bottom: 22px; }
   .hero-note strong { font-size: 28px; }
   .hero-note small { display: none; }
-  .welcome-band, .story-section, .numbers-section { padding-top: 79px; padding-bottom: 86px; }
+  .welcome-band, .coffee-moment, .story-section, .numbers-section { padding-top: 79px; padding-bottom: 86px; }
+  .coffee-moment__image::before { top: 15px; right: -12px; bottom: -15px; left: 12px; }
+  .photo-note { right: -10px; bottom: 18px; font-size: 9px; }
+  .coffee-moment__copy h2 { font-size: 47px; }
   .welcome-lede { font-size: 31px; }
   .story-heading h2 { font-size: 47px; }
   .timeline-item { grid-template-columns: 1fr; gap: 10px; padding: 20px 0 24px; }
