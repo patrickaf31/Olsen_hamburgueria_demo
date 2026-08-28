@@ -46,3 +46,26 @@ A página inclui navegação âncora para Início, Cardápio, A casa e Contato; 
 
 ## Nota sobre os assets do usuário
 Os links públicos fornecidos foram consultados. O álbum do iCloud permaneceu em carregamento na sessão automatizada e o Instagram redirecionou para login, portanto não foi possível extrair os arquivos originais. Para não bloquear o desenvolvimento, foram preparados assets editoriais próprios coerentes com o design anexado; os links originais permanecem registrados para substituição futura caso o usuário queira apontar para os arquivos reais.
+
+
+## Reformulação aprovada — Enxaimel de Afeto
+
+A nova direção substitui o clima de brasserie noturna. A Olsen passa a ser apresentada como uma casa de café acolhedora em Pomerode, com estética enxaimel contemporânea, texturas de madeira, terracota, linho e papel de receita. A foto real enviada pelo usuário é o único asset fotográfico da página; não serão inventadas fotos adicionais.
+
+### Princípios atuais
+A casa enxaimel é o elemento protagonista e deve aparecer em escala ampla. A narrativa da família vem antes de qualquer catálogo de produtos. O layout deve parecer uma página editorial de uma hospedaria/café local: mais calor, mais respiro, mais textura e menos linguagem de template. Bordas podem alternar entre cantos suaves em botões e recortes retos em painéis para equilibrar acolhimento e autenticidade.
+
+### Paleta e materialidade
+Usar creme de papel `#f6f0e5` como base, marrom café `#2e241d` para texto, verde musgo `#40533b`, terracota `#b86645` e mostarda `#dcae52` em detalhes. A cor de destaque deve lembrar luz de janela e madeira aquecida, nunca neon. Texturas discretas de papel e linhas de enxaimel podem ser construídas via CSS, sem imagens inventadas.
+
+### Composição e narrativa
+A página começa com a fotografia real da casa, texto curto e dois CTAs. Depois apresenta a Olsen com uma faixa de dados/manifesto, a história de Eduardo e Thayana em linha do tempo e um painel “Pequena Alemanha, grande afeto”. O fechamento traz o endereço/horário como informação a confirmar, Instagram e WhatsApp direto. O cardápio foi removido por decisão explícita do usuário.
+
+### Movimento
+Rolagem suave entre âncoras, revelação leve de blocos ao entrarem na viewport, pequenos deslocamentos no padrão enxaimel e hover sutil nos botões. Nenhuma animação deve parecer tecnológica, brilhante ou excessivamente automatizada; tudo deve lembrar papel, madeira e passagem de tempo. Todas as entradas respeitam `prefers-reduced-motion`.
+
+### Voz
+A escrita deve soar local, humana e afetiva, sem slogans genéricos. Frases aprovadas: “Uma casa enxaimel, um café passado e uma história para contar.” e “Do recomeço de dois para a pausa de muitos.”
+
+### WhatsApp
+O botão deve apontar para um link direto no formato `https://wa.me/55SEUNUMERO`, com o número oficial a ser substituído quando fornecido. Como ainda não há número informado, usar um valor facilmente localizável no código e sinalizar a necessidade de troca antes da publicação.

@@ -1,34 +1,32 @@
-/* Olsen — brasserie editorial contemporânea: canvas preto-oliva, creme quente, verde floresta e Olsen Lemon; composição assimétrica, fotografia gastronômica dominante e interações rápidas. */
-import { useEffect, useState } from "react";
+/* Olsen — reformulação enxaimel de afeto: cafeteria acolhedora de Pomerode, papel creme, madeira, terracota, verde musgo e a foto real da casa como único asset fotográfico. */
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import {
-  ArrowDownRight,
+  ArrowDown,
   ArrowUp,
   ArrowUpRight,
+  CalendarDays,
+  ChevronDown,
+  Coffee,
+  Heart,
   Instagram,
-  Menu,
-  X,
   MapPin,
-  Clock3,
-  Phone,
+  Menu,
+  MessageCircle,
+  Sprout,
+  X,
 } from "lucide-react";
 
-const asset = {
-  hero: "/manus-storage/olsen-hero-burger_602677a8.jpg",
-  coffee: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1000&q=88",
-  fries: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=1000&q=88",
-  space: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=88",
-  mark: "/manus-storage/olsen-mark_d984ac49.png",
-};
-
+const housePhoto = "/manus-storage/olsen-casa-enxaimel_bd052846.png";
 const instagramUrl = "https://www.instagram.com/olsen_cafeteria/";
+const whatsappUrl = "https://wa.me/5547991294132?text=Ol%C3%A1%20Olsen!%20Gostaria%20de%20saber%20mais%20sobre%20a%20cafeteria.";
 
-function BrandMark({ compact = false }: { compact?: boolean }) {
+function OlsenLogo({ dark = false }: { dark?: boolean }) {
   return (
-    <a className={compact ? "brand brand--compact" : "brand"} href="#inicio" aria-label="Olsen — voltar ao início">
-      <span className="brand-mark" aria-hidden="true">
+    <a href="#inicio" className={dark ? "olsen-logo olsen-logo--dark" : "olsen-logo"} aria-label="Olsen — voltar ao início">
+      <span className="logo-shield" aria-hidden="true">
         <svg viewBox="0 0 40 40" role="presentation">
-          <path d="M20 3c6.4 4.9 11 10.2 11 17.1 0 8.1-5.2 15-11 15S9 28.2 9 20.1c0-4.1 2-8.2 5.2-12.4-.2 5.6 2.1 8.4 4.6 9.9C21.1 14.5 21.4 9.9 20 3Z" />
-          <path d="M13.5 26.2c2.5-2.2 5-3.1 7.4-2.8 2.4.3 4.3 1.4 5.8 3.2-2.7 2.8-5.4 4.1-8.1 4-2.1-.1-3.8-1.5-5.1-4.4Z" fill="var(--black-olive)" />
+          <path d="M20 4 34 10v10c0 8.2-5.3 13.5-14 16-8.7-2.5-14-7.8-14-16V10L20 4Z" />
+          <path d="M20 10c4.4 3.5 7.3 7.1 7.3 11.5 0 5.1-3.1 9-7.3 9s-7.3-3.9-7.3-9c0-2.6 1.1-5.1 3.2-7.9-.1 3.2 1.2 4.7 2.5 5.6 1.1-2 2-5 1.6-10.2Z" fill="currentColor" />
         </svg>
       </span>
       <span>OLSEN</span>
@@ -36,11 +34,15 @@ function BrandMark({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function ArrowLink({ children, href = "#contato" }: { children: React.ReactNode; href?: string }) {
+function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+  return <div className={`reveal ${className}`} style={{ "--reveal-delay": `${delay}ms` } as CSSProperties}>{children}</div>;
+}
+
+function ArrowCta({ children, href, filled = false }: { children: ReactNode; href: string; filled?: boolean }) {
   return (
-    <a className="arrow-link" href={href}>
+    <a className={filled ? "pill-button pill-button--filled" : "pill-button"} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined}>
       <span>{children}</span>
-      <ArrowUpRight size={15} strokeWidth={1.6} aria-hidden="true" />
+      <ArrowUpRight size={16} strokeWidth={1.8} aria-hidden="true" />
     </a>
   );
 }
@@ -48,185 +50,118 @@ function ArrowLink({ children, href = "#contato" }: { children: React.ReactNode;
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showTop, setShowTop] = useState(false);
-  const [activeSection, setActiveSection] = useState("inicio");
 
   useEffect(() => {
-    const onScroll = () => setShowTop(window.scrollY > 500);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    const sections = ["inicio", "menu", "a-casa", "contato"]
-      .map((id) => document.getElementById(id))
-      .filter(Boolean) as HTMLElement[];
+    const revealItems = document.querySelectorAll<HTMLElement>(".reveal");
     const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActiveSection(visible.target.id);
-      },
-      { rootMargin: "-22% 0px -65% 0px", threshold: [0.1, 0.35, 0.7] },
+      (entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("is-visible")),
+      { threshold: 0.14, rootMargin: "0px 0px -45px" },
     );
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+    revealItems.forEach((item) => observer.observe(item));
+    const onScroll = () => setShowTop(window.scrollY > 620);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <div className="site-shell">
-      <header className="site-header">
-        <div className="header-inner">
-          <nav className="desktop-nav nav-left" aria-label="Navegação principal">
-            <a className={activeSection === "inicio" ? "nav-link is-active" : "nav-link"} href="#inicio">Início</a>
-            <a className={activeSection === "menu" ? "nav-link is-active" : "nav-link"} href="#menu">Cardápio</a>
-            <a className={activeSection === "a-casa" ? "nav-link is-active" : "nav-link"} href="#a-casa">A casa</a>
+    <div className="cozy-site">
+      <header className="cozy-header">
+        <div className="header-wrap page-width">
+          <OlsenLogo dark />
+          <nav className="main-nav" aria-label="Navegação principal">
+            <a href="#historia">Nossa história</a>
+            <a href="#casa">A casa</a>
+            <a href="#visite">Visite</a>
           </nav>
-
-          <BrandMark />
-
-          <nav className="desktop-nav nav-right" aria-label="Links sociais">
-            <a className="nav-link" href={instagramUrl} target="_blank" rel="noreferrer">Instagram</a>
-            <a className="header-order" href="#contato">Pedir agora</a>
-          </nav>
-
-          <button
-            className="mobile-menu-button"
-            type="button"
-            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            {menuOpen ? <X size={22} strokeWidth={1.7} /> : <Menu size={22} strokeWidth={1.7} />}
-          </button>
+          <div className="header-actions">
+            <a className="header-whatsapp" href={whatsappUrl} target="_blank" rel="noreferrer"><MessageCircle size={16} /> WhatsApp</a>
+            <button className="mobile-toggle" type="button" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Fechar menu" : "Abrir menu"} aria-expanded={menuOpen}>{menuOpen ? <X size={21} /> : <Menu size={21} />}</button>
+          </div>
         </div>
-
-        <div className={menuOpen ? "mobile-menu is-open" : "mobile-menu"}>
-          <div className="mobile-menu__top"><span>Menu</span><span>01—04</span></div>
-          <a href="#inicio" onClick={closeMenu}>Início <ArrowUpRight size={18} /></a>
-          <a href="#menu" onClick={closeMenu}>Cardápio <ArrowUpRight size={18} /></a>
-          <a href="#a-casa" onClick={closeMenu}>A casa <ArrowUpRight size={18} /></a>
-          <a href="#contato" onClick={closeMenu}>Contato <ArrowUpRight size={18} /></a>
-          <a className="mobile-menu__social" href={instagramUrl} target="_blank" rel="noreferrer">Instagram <Instagram size={18} /></a>
+        <div className={menuOpen ? "mobile-panel is-open" : "mobile-panel"}>
+          <span className="mobile-panel__eyebrow">OLSEN / POMERODE</span>
+          <a href="#historia" onClick={closeMenu}>Nossa história <ArrowUpRight size={18} /></a>
+          <a href="#casa" onClick={closeMenu}>A casa <ArrowUpRight size={18} /></a>
+          <a href="#visite" onClick={closeMenu}>Visite <ArrowUpRight size={18} /></a>
+          <a className="mobile-panel__whatsapp" href={whatsappUrl} target="_blank" rel="noreferrer"><MessageCircle size={18} /> Falar no WhatsApp</a>
         </div>
       </header>
 
       <main>
-        <section id="inicio" className="hero-section">
-          <div className="hero-media" style={{ backgroundImage: `url(${asset.hero})` }} aria-label="Hambúrguer artesanal servido com batatas e café gelado" role="img" />
-          <div className="hero-overlay" />
+        <section id="inicio" className="cozy-hero">
+          <div className="hero-frame hero-frame--left" aria-hidden="true" />
+          <div className="hero-frame hero-frame--right" aria-hidden="true" />
+          <div className="hero-image-wrap"><img src={housePhoto} alt="Casa enxaimel da Olsen Cafeteria em Pomerode" /></div>
+          <div className="hero-wash" aria-hidden="true" />
           <div className="hero-content page-width">
-            <div className="hero-kicker"><span className="line" /> <span>CAFÉ &amp; HAMBÚRGUERIA</span></div>
-            <h1>CHAPA<br /><em>QUENTE.</em><br />CAFÉ<br /><em>PASSADO.</em></h1>
-            <p className="hero-copy">Uma pausa urbana para comer bem, beber melhor e ficar mais um pouco.</p>
-            <div className="hero-actions">
-              <a className="button button--lemon" href="#menu">Ver o cardápio <ArrowDownRight size={17} /></a>
-              <a className="button button--ghost" href={instagramUrl} target="_blank" rel="noreferrer">Seguir no Instagram <ArrowUpRight size={16} /></a>
-            </div>
+            <Reveal className="hero-copy-block">
+              <span className="small-label"><span className="label-dot" /> Casa enxaimel centenária · Pomerode</span>
+              <h1>Uma casa<br /><em>para chamar</em><br />de sua.</h1>
+              <p>Um café passado, um bolo de família e tempo para ficar. Bem-vindo à Olsen.</p>
+              <div className="hero-ctas"><ArrowCta href="#historia" filled>Conheça a nossa história</ArrowCta><a className="text-cta" href="#visite">Como chegar <ArrowDown size={16} /></a></div>
+            </Reveal>
+            <Reveal className="hero-note" delay={160}><span>Desde</span><strong>07.25</strong><small>Pequena Alemanha</small></Reveal>
           </div>
-          <div className="hero-meta page-width">
-            <span>01 / 04</span>
-            <span className="hero-meta__rule" />
-            <span>Feito para a cidade</span>
+          <a className="scroll-cue" href="#historia" aria-label="Rolar para a história"><span>Role para conhecer</span><ChevronDown size={18} /></a>
+        </section>
+
+        <section className="welcome-band paper-section">
+          <div className="page-width welcome-grid">
+            <Reveal><span className="small-label small-label--rust"><span className="label-dot" /> Feito à mão, com afeto</span></Reveal>
+            <Reveal delay={100}><p className="welcome-lede">Em Pomerode, algumas casas guardam histórias. A Olsen decidiu preparar café dentro de uma delas — e abrir as portas para a sua.</p></Reveal>
+            <Reveal className="welcome-aside" delay={180}><span>O café fica melhor<br />quando a conversa demora.</span><Heart size={22} strokeWidth={1.4} /></Reveal>
           </div>
         </section>
 
-        <div className="manifesto-ribbon" aria-label="O que a Olsen oferece">
-          <span>CHAPA QUENTE</span><i /> <span>CAFÉ PASSADO</span><i /> <span>SEM PRESSA</span><i /> <span>CHAPA QUENTE</span><i /> <span>CAFÉ PASSADO</span>
-        </div>
-
-        <section id="menu" className="menu-section light-section">
-          <div className="page-width">
-            <div className="section-intro section-intro--split">
-              <div>
-                <span className="eyebrow eyebrow--ink">02 / O CARDÁPIO</span>
-                <h2>Para pedir sem pensar duas vezes.</h2>
-              </div>
-              <p>Ingredientes diretos, combinações que funcionam e aquele tipo de sabor que pede mais um gole — ou mais uma mordida.</p>
-            </div>
-
-            <div className="menu-grid">
-              <article className="menu-card menu-card--featured">
-                <div className="menu-image-wrap"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=88" alt="Hambúrguer artesanal com queijo derretido" /></div>
-                <div className="menu-card__meta"><span>01</span><span>Da chapa</span></div>
-                <h3>Olsen Smash</h3>
-                <p>Carne prensada na chapa, queijo derretido, picles e molho da casa no pão brioche.</p>
-                <ArrowLink>Ver no cardápio</ArrowLink>
-              </article>
-
-              <article className="menu-card">
-                <div className="menu-image-wrap"><img src={asset.coffee} alt="Cappuccino artesanal em xícara creme" /></div>
-                <div className="menu-card__meta"><span>02</span><span>Da máquina</span></div>
-                <h3>Café da casa</h3>
-                <p>Espresso, cappuccino e café gelado para acompanhar o seu ritmo — sem atropelar o sabor.</p>
-                <ArrowLink>Escolher meu café</ArrowLink>
-              </article>
-
-              <article className="menu-card">
-                <div className="menu-image-wrap"><img src={asset.fries} alt="Batatas rústicas douradas com molho" /></div>
-                <div className="menu-card__meta"><span>03</span><span>Para dividir</span></div>
-                <h3>Batatas Olsen</h3>
-                <p>Rústicas, douradas e crocantes por fora. Com molho para mergulhar sem economia.</p>
-                <ArrowLink>Adicionar ao pedido</ArrowLink>
-              </article>
+        <section id="historia" className="story-section paper-section">
+          <div className="beam-pattern beam-pattern--top" aria-hidden="true" />
+          <div className="page-width story-layout">
+            <Reveal className="story-heading"><span className="small-label small-label--moss"><span className="label-dot" /> A nossa história</span><h2>Dois recomeços.<br /><em>Uma casa cheia.</em></h2><p>Eduardo e Thayana trocaram a estabilidade por um sonho antigo. O resto, fizeram com as próprias mãos.</p></Reveal>
+            <div className="timeline">
+              <Reveal className="timeline-item" delay={80}><span className="timeline-year">01 / O sonho</span><div><h3>Antes da Olsen</h3><p>Eduardo trabalhava com soldagem, trailers e carros antigos. Thayana estava prestes a se formar em Enfermagem — cada um seguindo seu caminho, até a vida pedir uma pausa.</p></div></Reveal>
+              <Reveal className="timeline-item" delay={160}><span className="timeline-year">02 / A virada</span><div><h3>Um bebê a caminho</h3><p>Um dia antes da formatura de Thayana, veio a notícia que mudaria tudo: o casal descobriu que seria pai e mãe. Junto com a novidade, veio a coragem de tirar um sonho do papel.</p></div></Reveal>
+              <Reveal className="timeline-item" delay={240}><span className="timeline-year">03 / Pomerode</span><div><h3>Pequena Alemanha</h3><p>Em julho de 2025, eles deixaram Rio Negrinho e recomeçaram no coração de Pomerode. Uma casa enxaimel centenária virou endereço, oficina, jardim e lar.</p></div></Reveal>
+              <Reveal className="timeline-item" delay={320}><span className="timeline-year">04 / A Olsen</span><div><h3>Receitas de família</h3><p>Com as mãos de Eduardo na reforma e as receitas dos pais de Thayana na cozinha, nasceu uma cafeteria com jeito de casa de vó — simples, honesta e feita para acolher.</p></div></Reveal>
             </div>
           </div>
         </section>
 
-        <section id="a-casa" className="house-section dark-section">
-          <div className="page-width house-layout">
-            <div className="house-copy">
-              <span className="eyebrow eyebrow--cream">03 / A CASA</span>
-              <h2>Entra pelo aroma.<br /><em>Fica pelo primeiro mordisco.</em></h2>
-              <p>A Olsen nasceu para os intervalos que viram encontro. Tem café para começar o dia, chapa para encerrar a noite e uma mesa que nunca parece estar com pressa.</p>
-              <div className="house-details">
-                <div><span>01</span><strong>Artesanal sem afetação</strong></div>
-                <div><span>02</span><strong>Do café ao último pedido</strong></div>
-                <div><span>03</span><strong>Uma casa para repetir</strong></div>
-              </div>
-              <ArrowLink href={instagramUrl}>Conhecer a Olsen</ArrowLink>
-            </div>
-            <figure className="house-image"><img src={asset.space} alt="Interior acolhedor da Olsen com luz quente" /><figcaption>Uma casa para qualquer hora.</figcaption></figure>
+        <section id="casa" className="house-section">
+          <div className="house-grid page-width">
+            <Reveal className="house-card house-card--moss"><div className="house-icon"><Coffee size={28} strokeWidth={1.25} /></div><span className="small-label small-label--cream">O que mora aqui</span><h2>Café, bolo<br />e conversa.</h2><p>O cardápio muda, o acolhimento fica. Tudo preparado em pequena escala, com receitas de família e o cuidado de quem conhece cada canto da casa.</p></Reveal>
+            <Reveal className="house-card house-card--terracotta" delay={140}><div className="house-icon"><Sprout size={28} strokeWidth={1.25} /></div><span className="small-label small-label--cream">Mão na massa</span><h2>Feito por<br />Eduardo e Thayana.</h2><p>Do jardim ao sótão, da decoração às formas para servir: a Olsen tem a marca das mãos que imaginaram este lugar.</p></Reveal>
+            <Reveal className="house-card house-card--cream" delay={280}><div className="house-icon"><CalendarDays size={28} strokeWidth={1.25} /></div><span className="small-label small-label--moss">Um dia de cada vez</span><h2>Chegue sem<br />pressa.</h2><p>A casa fica na Rua Hermann Weege, 1178, no Centro de Pomerode. Um lugar para visitar, respirar e voltar.</p></Reveal>
           </div>
         </section>
 
-        <section className="quote-section light-section">
-          <div className="page-width quote-layout">
-            <span className="eyebrow eyebrow--ink">04 / O RITMO</span>
-            <blockquote>“Tem dia que pede café. Tem dia que pede hambúrguer. Tem dia que pede os dois.”</blockquote>
-            <div className="quote-signature"><span className="quote-rule" /><span>Olsen Cafeteria</span></div>
+        <section className="numbers-section paper-section">
+          <div className="page-width numbers-grid">
+            <Reveal><span className="numbers-big">400</span><span className="numbers-caption">pessoas em um dia de casa cheia</span></Reveal>
+            <Reveal delay={120}><span className="numbers-big">07.25</span><span className="numbers-caption">quando a história começou em Pomerode</span></Reveal>
+            <Reveal delay={240}><span className="numbers-big">∞</span><span className="numbers-caption">receitas, encontros e motivos para voltar</span></Reveal>
           </div>
         </section>
 
-        <section id="contato" className="contact-section dark-section">
-          <div className="page-width contact-layout">
-            <div>
-              <span className="eyebrow eyebrow--cream">05 / CONTATO</span>
-              <h2>Seu próximo<br /><em>intervalo começa aqui.</em></h2>
-              <p className="contact-lede">Acompanhe o Instagram para ver o endereço, os horários e o que acabou de sair da chapa.</p>
-              <a className="button button--lemon" href={instagramUrl} target="_blank" rel="noreferrer">Abrir Instagram <Instagram size={17} /></a>
-            </div>
-            <div className="contact-info">
-              <div className="contact-item"><MapPin size={19} strokeWidth={1.3} /><div><span>Onde</span><strong>Consulte a localização atualizada<br />no Instagram</strong></div></div>
-              <div className="contact-item"><Clock3 size={19} strokeWidth={1.3} /><div><span>Quando</span><strong>Café, chapa e conversa<br />no ritmo da cidade</strong></div></div>
-              <div className="contact-item"><Phone size={19} strokeWidth={1.3} /><div><span>Fale com a casa</span><strong><a href={instagramUrl} target="_blank" rel="noreferrer">@olsen_cafeteria</a></strong></div></div>
-            </div>
+        <section id="visite" className="visit-section">
+          <div className="beam-pattern beam-pattern--bottom" aria-hidden="true" />
+          <div className="page-width visit-layout">
+            <Reveal className="visit-heading"><span className="small-label small-label--cream"><span className="label-dot" /> Venha para a Olsen</span><h2>Tem sempre<br /><em>lugar para mais um.</em></h2><p>Rua Hermann Weege, 1178 · Centro · Pomerode / SC</p><div className="visit-actions"><ArrowCta href={whatsappUrl} filled>Falar no WhatsApp</ArrowCta><ArrowCta href={instagramUrl}>Ver no Instagram</ArrowCta></div></Reveal>
+            <Reveal className="visit-details" delay={160}><div className="detail-row"><MapPin size={19} /><span>Endereço</span><strong>Rua Hermann Weege, 1178<br />Centro, Pomerode — SC</strong></div><div className="detail-row"><Coffee size={19} /><span>Horários</span><strong>Quarta a sexta<br />07h30–11h30 · 14h–19h<br /><br />Sábado e domingo<br />07h30–19h</strong></div><div className="detail-row"><MessageCircle size={19} /><span>Contato</span><strong><a href={whatsappUrl} target="_blank" rel="noreferrer">(47) 99129-4132</a><br /><a href={instagramUrl} target="_blank" rel="noreferrer">@olsen_cafeteria</a></strong></div></Reveal>
           </div>
         </section>
       </main>
 
-      <footer className="site-footer">
-        <div className="page-width footer-top">
-          <BrandMark compact />
-          <span className="footer-note">Hambúrgueria &amp; cafeteria<br />para ficar mais um pouco.</span>
-          <a className="footer-instagram" href={instagramUrl} target="_blank" rel="noreferrer"><Instagram size={17} /> <span>Instagram</span></a>
-        </div>
-        <div className="page-width footer-bottom"><span>© {new Date().getFullYear()} Olsen Cafeteria</span><span>Feito para a cidade.</span></div>
+      <footer className="cozy-footer">
+        <div className="page-width footer-main"><OlsenLogo /><div className="footer-phrase">Uma casa enxaimel.<br /><em>Um café com história.</em></div><a className="footer-social" href={instagramUrl} target="_blank" rel="noreferrer"><Instagram size={18} /> Instagram <ArrowUpRight size={15} /></a></div>
+        <div className="page-width footer-bottom"><span>© {new Date().getFullYear()} Olsen Cafeteria</span><span>Pomerode · SC</span><span>Feito devagar, para durar.</span></div>
       </footer>
 
-      <button className={showTop ? "back-top is-visible" : "back-top"} type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Voltar ao topo"><ArrowUp size={18} strokeWidth={1.5} /></button>
+      <button className={showTop ? "back-top is-visible" : "back-top"} type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Voltar ao topo"><ArrowUp size={17} /></button>
     </div>
   );
 }
