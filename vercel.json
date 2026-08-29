@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/manus-storage/olsen-casa-enxaimel_bd052846.png",
+      "destination": "/IMG_6915.jpeg"
+    },
+    {
+      "source": "/manus-storage/olsen-cafezinho_999f2e66.png",
+      "destination": "/IMG_6924.jpeg"
+    }
+  ]
+}
