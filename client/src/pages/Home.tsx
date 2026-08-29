@@ -16,8 +16,8 @@ import {
   X,
 } from "lucide-react";
 
-const housePhoto = "/manus-storage/olsen-casa-enxaimel_bd052846.png";
-const coffeePhoto = "/manus-storage/olsen-cafezinho_999f2e66.png";
+const housePhoto = "/images/olsen-casa-enxaimel.png";
+const coffeePhoto = "/images/olsen-cafezinho.png";
 const instagramUrl = "https://www.instagram.com/olsen_cafeteria/";
 const whatsappUrl = "https://wa.me/5547991294132?text=Ol%C3%A1%20Olsen!%20Gostaria%20de%20saber%20mais%20sobre%20a%20cafeteria.";
 
