@@ -10,5 +10,5 @@
 - [x] Validar desktop, mobile e build; links revisados no código e prontos para teste final.
 - [x] Hospedar a foto real `IMG_6924.PNG` e integrá-la em uma seção editorial de café, mantendo espaço para a próxima foto.
 - [x] Exportar o projeto para o GitHub no repositório `Olsen_hamburgueria_demo`.
-- [ ] Copiar as duas fotos reais para o repositório, atualizar os caminhos do frontend e sincronizar a correção com a Vercel.
-- [ ] Publicar o projeto na Vercel a partir do repositório GitHub.
+- [x] Copiar as duas fotos reais para o repositório, atualizar os caminhos do frontend e sincronizar a correção com a Vercel.
+- [x] Publicar o projeto na Vercel a partir do repositório GitHub; deploy de produção confirmado.
